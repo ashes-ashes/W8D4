@@ -8,7 +8,7 @@ const Board = require("./board.js");
 function Game () {
   this.board = new Board();
   this.turn = "black";
-};
+}
 
 /**
  * Flips the current turn to the opposite color.
@@ -48,7 +48,14 @@ Game.prototype.playTurn = function (callback) {
   );
 
   function handleResponse(answer) {
+    if (!answer.match(/^\[\d\,\d\]$/)) {
+      console.log("That doesn't look like a move to me.");
+      this.playTurn(callback);
+      return;
+    }
+
     const pos = JSON.parse(answer);
+    
     if (!this.board.validMove(pos, this.turn)) {
       console.log("Invalid move!");
       this.playTurn(callback);
