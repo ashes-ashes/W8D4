@@ -41,6 +41,29 @@ Board.prototype.getPiece = function (pos) {
   }
 };
 
+Board.prototype.countPieces = function (color) {
+  let count = 0;
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 7; j++) {
+      if (this.isMine([i, j], color)) {
+        count += 1;
+      }
+    }
+  }
+  return count;
+};
+
+Board.prototype.discernWinner = function() {
+  let whitecount = this.countPieces('white');
+  let blackcount = this.countPieces('black');
+  console.log(`White had ${whitecount} pieces.`);
+  console.log(`Black had ${blackcount} pieces.`);
+  let winner = 'black';
+  if (whitecount > blackcount) {
+    winner = 'white';
+  }
+  console.log(`${winner} won!`);
+};
 
 
 /**

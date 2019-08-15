@@ -89,6 +89,7 @@ Game.prototype.dumbAITurn = function(callback) {
 
   this.board.placePiece(moves[idx], this.turn);
   console.log(`${this.turn} has played to [${moves[idx]}].`);
+
   this._flipTurn();
   callback();
 };
