@@ -144,7 +144,7 @@ Board.prototype.placePiece = function (pos, color) {
  */
 Board.prototype.print = function () {
   let lines = [];
-  console.log("   0  1  2  3  4  5  6  7 ")
+  console.log("   0  1  2  3  4  5  6  7 ");
   for (let i = 0; i < 8; i++) {
     let line = ` ${i}`;
     for (let j = 0; j < 8; j++) {

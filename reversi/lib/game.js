@@ -36,6 +36,20 @@ Game.prototype.play = function () {
   });
 };
 
+Game.prototype.ai_play = function () {
+  rlInterface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+  });
+
+  this.runAILoop(function () {
+    rlInterface.close();
+    rlInterface = null;
+  });
+};
+
+
 /**
  * Gets the next move from the current player and
  * attempts to make the play.
@@ -68,6 +82,23 @@ Game.prototype.playTurn = function (callback) {
   }
 };
 
+Game.prototype.dumbAITurn = function(callback) {
+  this.board.print();
+  let moves = this.board.validMoves(this.turn);
+  let idx = getRandomInt(0, moves.length-1);
+
+  this.board.placePiece(moves[idx], this.turn);
+  console.log(`${this.turn} has played to [${moves[idx]}].`);
+  this._flipTurn();
+  callback();
+};
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 /**
  * Continues game play, switching turns, until the game is over.
  */
@@ -81,6 +112,27 @@ Game.prototype.runLoop = function (overCallback) {
     this.runLoop();
   } else {
     this.playTurn(this.runLoop.bind(this, overCallback));
+  }
+};
+
+Game.prototype.substituteAI = function (callback) {
+  if (this.turn === "black") {
+    this.playTurn(callback);
+  } else {
+    this.dumbAITurn(callback);
+  }
+};
+
+Game.prototype.runAILoop = function (overCallback) {
+  if (this.board.isOver()) {
+    console.log("The game is over!");
+    overCallback();
+  } else if (!this.board.hasMove(this.turn)) {
+    console.log(`${this.turn} has no move!`);
+    this._flipTurn();
+    this.runAILoop();
+  } else {
+    this.substituteAI(this.runAILoop.bind(this, overCallback));
   }
 };
 
