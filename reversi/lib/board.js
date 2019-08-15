@@ -172,7 +172,7 @@ Board.prototype.print = function () {
     let line = ` ${i}`;
     for (let j = 0; j < 8; j++) {
       if (this.grid[i][j] === null) {
-        line += " □ ";
+        line += " 🌌 ";
       } else {
         line += (" " + this.getPiece([i, j]).toString()+ " ");
       }

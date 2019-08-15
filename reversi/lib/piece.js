@@ -29,9 +29,9 @@ Piece.prototype.flip = function () {
  */
 Piece.prototype.toString = function () {
   if (this.color === 'white') {
-    return "⚪";
+    return "🌕";
   } else {
-    return "⚫";
+    return "🌑";
   }
 };
 

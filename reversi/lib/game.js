@@ -127,6 +127,7 @@ Game.prototype.substituteAI = function (callback) {
 Game.prototype.runAILoop = function (overCallback) {
   if (this.board.isOver()) {
     console.log("The game is over!");
+    this.board.discernWinner();
     overCallback();
   } else if (!this.board.hasMove(this.turn)) {
     console.log(`${this.turn} has no move!`);
